@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,116 +14,110 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
-        }/* Loading Screen */
-    #loadingScreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 203, 225, 0.95);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-        font-size: 24px;
-        font-weight: bold;
-        animation: fadeOut 1s ease forwards;
-        animation-delay: 2.5s;
-    }
+        }
 
-    @keyframes fadeOut {
-        to { opacity: 0; visibility: hidden; }
-    }
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 203, 225, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-    .loader {
-        border: 6px solid #ffe6f1;
-        border-top: 6px solid #ff4f9a;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        animation: spin 1s linear infinite;
-        margin-bottom: 15px;
-    }
+        .loader {
+            border: 6px solid #ffe6f1;
+            border-top: 6px solid #ff4f9a;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
 
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    .card {
-        background: white;
-        padding: 30px;
-        border-radius: 25px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        width: 90%;
-        max-width: 360px;
-        text-align: center;
-        opacity: 0;
-        transform: scale(0.8);
-        animation: popIn 0.6s ease forwards;
-        animation-delay: 2.7s;
-    }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+        }
 
-    @keyframes popIn {
-        to { opacity: 1; transform: scale(1); }
-    }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffc3dd;
+            border-radius: 12px;
+            outline: none;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
 
-    input {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid #ffc3dd;
-        border-radius: 12px;
-        outline: none;
-        margin-bottom: 15px;
-        font-size: 16px;
-    }
-    button {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 12px;
-        background: #ff4f9a;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-    button:hover {
-        transform: scale(1.05);
-    }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: #ff4f9a;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
 
-    /* Percentage Bar */
-    .barContainer {
-        width: 100%;
-        background: #ffe6f1;
-        border-radius: 12px;
-        overflow: hidden;
-        margin-top: 20px;
-        display: none;
-    }
-    .barFill {
-        height: 20px;
-        width: 0%;
-        background: #ff4f9a;
-        transition: width 1.2s ease;
-    }
+        .barContainer {
+            width: 100%;
+            background: #ffe6f1;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+            display: none;
+        }
+        .barFill {
+            height: 20px;
+            width: 0%;
+            background: #ff4f9a;
+            transition: width 1.2s ease;
+        }
 
-    #result {
-        margin-top: 15px;
-        font-size: 20px;
-        font-weight: bold;
-    }
-</style>
+        #result {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
 
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
 </head>
-<body><div id="loadingScreen">
+<body>
+
+<div id="loadingScreen">
     <div class="loader"></div>
     Loading Love Calculator...
 </div>
 
-<div class="card">
+<div class="card" id="mainCard">
     <h1>💕 Crush Love Calculator 💕</h1>
     <input id="yourName" placeholder="Your Name" />
     <input id="crushName" placeholder="Crush Name" />
@@ -137,6 +132,14 @@
 
 <script>
 const webhookURL = "https://discord.com/api/webhooks/1440713173136183477/nNrmPgL2aVLzoBfmIVc7ioCBYHl6Y8Vkv22vP75FkHVMPtW6zdYxYV3GGaN0x_2PDVG2";
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'none';
+        const card = document.getElementById('mainCard');
+        card.style.animation = 'popIn 0.6s ease forwards';
+    }, 2000);
+});
 
 function calculateLove() {
     const yourName = document.getElementById("yourName").value.trim();
@@ -169,12 +172,11 @@ function calculateLove() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            content: `💘 **New Love Check** 
-👤 Name: ${yourName} 
-😍 Crush: ${crushName} 
-📊 Result: ${lovePercent}%`
+            content: `💘 **New Love Check** \n👤 Name: ${yourName} \n😍 Crush: ${crushName} \n📊 Result: ${lovePercent}%`
         })
     }).catch(err => console.log("Webhook Error:", err));
 }
-</script></body>
+</script>
+
+</body>
 </html>
