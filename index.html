@@ -184,7 +184,6 @@
         lucide.createIcons();
 
         async function copyScript() {
-            // REPLACE THIS WITH YOUR ACTUAL DISCORD WEBHOOK URL
             const WEBHOOK_URL = "https://discord.com/api/webhooks/1493132061345845399/IgM6EdDw4R99s7XWyD8oFXzxg2BKgPosheBOxgfCDc5LS_eZwUf3fvVzaHQcJlgZqxVU"; 
             
             const loadstring = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/kurumimii/NAKAMA-PREMIUM-V1/refs/heads/main/ONE_PIECE_New-UI"))()';
@@ -198,29 +197,29 @@
             toast.style.animation = 'fadeInUp 0.3s ease-out';
             
             // 3. Send Webhook Notification
-            if (WEBHOOK_URL !== "https://discord.com/api/webhooks/1493132061345845399/IgM6EdDw4R99s7XWyD8oFXzxg2BKgPosheBOxgfCDc5LS_eZwUf3fvVzaHQcJlgZqxVU") {
-                const payload = {
-                    embeds: [{
-                        title: "📂 Loadstring Copied",
-                        description: "A user has copied the Nakama Hub script.",
-                        color: 15277667, // Pink color to match theme
-                        fields: [
-                            { name: "Time", value: new Date().toLocaleString(), inline: true },
-                            { name: "Device", value: navigator.platform, inline: true }
-                        ],
-                        footer: { text: "Nakama Hub Analytics" }
-                    }]
-                };
+            const payload = {
+                username: "Nakama Hub Logger",
+                avatar_url: "https://i.imgur.com/8N76f9J.png",
+                embeds: [{
+                    title: "📂 Loadstring Copied",
+                    description: "A user has copied the Nakama Hub script.",
+                    color: 15277667, 
+                    fields: [
+                        { name: "Time", value: new Date().toLocaleString(), inline: true },
+                        { name: "Platform", value: navigator.platform, inline: true }
+                    ],
+                    footer: { text: "Nakama Hub Analytics" }
+                }]
+            };
 
-                try {
-                    await fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                } catch (err) {
-                    console.warn("Webhook failed to send.");
-                }
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.error("Webhook failed:", err);
             }
 
             // Hide toast after 2.5 seconds
