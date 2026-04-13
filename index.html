@@ -3,210 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nakama Hub | Steal a Brainrot Edition</title>
+    <title>Nakama Hub | Steal a Brainrot #1</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap');
+
         :root {
-            --accent: #00ff88; /* Toxic Green for Brainrot theme */
-            --secondary: #00d4ff;
-            --bg: #050508;
-            --card: rgba(255, 255, 255, 0.02);
-            --border: rgba(0, 255, 136, 0.1);
+            --accent: #00ffcc; /* Neon Cyan */
+            --bg: #030303;
+            --glass: rgba(255, 255, 255, 0.01);
+            --border: rgba(0, 255, 204, 0.15);
+            --glow: 0 0 15px rgba(0, 255, 204, 0.3);
         }
 
-        /* Smooth Scroll & Custom Scrollbar */
-        html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; cursor: crosshair; }
         
         body { 
             background-color: var(--bg); 
             color: white; 
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 10% 10%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 90% 90%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+                linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+                url('https://www.transparenttextures.com/patterns/stardust.png');
         }
 
-        /* Animations */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        @keyframes pulse-border { 0% { border-color: var(--border); } 50% { border-color: var(--accent); } 100% { border-color: var(--border); } }
+        /* Glitch Effect for Titles */
+        .glitch {
+            position: relative;
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+        }
 
-        /* Navbar */
+        @keyframes flicker {
+            0% { opacity: 0.8; } 5% { opacity: 0.9; } 10% { opacity: 0.4; } 15% { opacity: 1; }
+            80% { opacity: 0.9; } 100% { opacity: 1; }
+        }
+
+        /* Navbar Customization */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1.5rem 10%; background: rgba(5, 5, 8, 0.7);
+            padding: 1.5rem 8%; background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
 
-        .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: -2px; color: var(--accent); }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--accent); text-shadow: var(--glow); }
 
-        /* Hero */
+        /* Hero Showcase */
         header { 
-            text-align: center; padding: 150px 10% 100px;
-            position: relative;
+            height: 90vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
+            padding: 0 10%;
         }
         
-        .hero-badge {
-            background: rgba(0, 255, 136, 0.1); border: 1px solid var(--accent);
-            color: var(--accent); padding: 10px 25px; border-radius: 50px;
-            font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 2px; display: inline-block; margin-bottom: 2rem;
+        .hero-tag {
+            color: var(--accent); font-weight: 700; letter-spacing: 5px;
+            text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem;
+            animation: flicker 2s infinite;
         }
 
-        h1 { font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 900; line-height: 0.9; margin-bottom: 2rem; }
-        .gradient-text { background: linear-gradient(to bottom, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h1 { font-size: clamp(3rem, 12vw, 7rem); font-weight: 900; line-height: 0.85; margin-bottom: 2rem; }
+        .outline-text { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.3); }
 
-        .btn-group { display: flex; gap: 20px; justify-content: center; align-items: center; }
-
-        .btn-main {
-            background: var(--accent); color: #000; padding: 20px 50px;
-            border-radius: 15px; font-weight: 800; border: none; cursor: pointer;
-            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            font-size: 1.1rem; box-shadow: 0 10px 40px rgba(0, 255, 136, 0.3);
+        .main-btn {
+            background: transparent; color: var(--accent); border: 2px solid var(--accent);
+            padding: 18px 50px; border-radius: 0px; font-weight: 800; font-family: 'Syncopate';
+            font-size: 0.9rem; transition: 0.5s; box-shadow: var(--glow);
+            position: relative; overflow: hidden;
         }
 
-        .btn-main:hover { transform: scale(1.1) rotate(-1deg); background: #fff; box-shadow: 0 10px 60px rgba(255, 255, 255, 0.2); }
+        .main-btn:hover { background: var(--accent); color: black; box-shadow: 0 0 50px var(--accent); transform: scale(1.05); }
 
-        /* Brainrot Dashboard Info */
-        .info-section {
-            padding: 100px 10%; display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: center;
+        /* Feature Section */
+        .showcase { padding: 100px 10%; }
+        .section-header { margin-bottom: 60px; border-left: 4px solid var(--accent); padding-left: 20px; }
+
+        .feature-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;
         }
 
-        .code-preview {
-            background: #000; border: 1px solid var(--border); padding: 30px;
-            border-radius: 20px; position: relative; animation: pulse-border 3s infinite;
+        .feature-item {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 50px; position: relative; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .code-preview header { padding: 0 0 15px; text-align: left; border-bottom: 1px solid #1a1a1a; margin-bottom: 15px; }
-
-        /* Grid */
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; padding: 50px 10% 100px;
+        .feature-item::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 2px;
+            background: var(--accent); transition: 0.4s;
         }
 
-        .card {
-            background: var(--card); border: 1px solid var(--border); padding: 40px;
-            border-radius: 30px; transition: 0.5s; position: relative; overflow: hidden;
+        .feature-item:hover { background: rgba(0, 255, 204, 0.05); transform: translateY(-10px); }
+        .feature-item:hover::before { width: 100%; }
+
+        .feature-item h3 { font-family: 'Syncopate'; font-size: 1.1rem; margin-bottom: 15px; color: var(--accent); }
+        .feature-item p { color: #aaa; font-weight: 300; line-height: 1.6; }
+
+        /* Visual Showcase Image Holder */
+        .media-box {
+            width: 100%; height: 400px; background: #111; margin-top: 40px;
+            border: 1px solid var(--border); position: relative;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
         }
 
-        .card:hover { background: rgba(0, 255, 136, 0.03); transform: translateY(-15px) scale(1.02); }
-        .card i { color: var(--accent); margin-bottom: 25px; }
-        .card h3 { font-size: 1.5rem; margin-bottom: 15px; }
-        .card p { color: #888; line-height: 1.8; }
+        .media-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
 
-        /* Toast */
-        #toast {
-            position: fixed; bottom: 40px; right: 40px;
-            background: white; color: black; padding: 20px 40px;
-            border-radius: 15px; font-weight: 900; display: none;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 9999;
-        }
-
-        /* Floating Memes Blur */
-        .blur-orb {
-            position: absolute; width: 300px; height: 300px;
-            background: var(--accent); filter: blur(150px);
-            opacity: 0.1; z-index: -1; animation: float 10s infinite;
-        }
-
-        @media (max-width: 900px) {
-            .info-section { grid-template-columns: 1fr; text-align: center; }
+        /* Copy Notification */
+        #notif {
+            position: fixed; top: 10%; left: 50%; transform: translateX(-50%);
+            background: var(--accent); color: black; padding: 10px 30px;
+            font-weight: 900; font-family: 'Syncopate'; clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+            display: none; z-index: 10000;
         }
     </style>
 </head>
 <body>
 
-    <div class="blur-orb" style="top: 10%; left: 5%;"></div>
-    <div class="blur-orb" style="bottom: 10%; right: 5%; background: var(--secondary);"></div>
+    <div id="notif">SCRIPT LOADED // STATUS: ACTIVE</div>
 
     <nav>
-        <div class="logo">NAKAMA <span style="color: #fff;">HUB</span></div>
-        <div class="nav-links">
-            <a href="#" class="btn-main" style="padding: 10px 20px; font-size: 0.9rem;">Join Discord</a>
+        <div class="logo glitch">NAKAMA_v4</div>
+        <div style="display: flex; gap: 30px;">
+            <a href="#" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.8rem;">DISCORD</a>
+            <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.8rem;">SHOWCASE</a>
         </div>
     </nav>
 
     <header>
-        <div class="hero-badge">Brainrot Meta — v4.0 Active</div>
-        <h1><span class="gradient-text">Max Your Aura.</span><br>Steal A Brainrot.</h1>
-        <p style="color: #666; max-width: 700px; margin: 0 auto 3rem; font-size: 1.2rem;">The only script optimized for the Brainrot economy. Autofarm Skibidi points, auto-rizz the NPCs, and secure the Mogging victory.</p>
-        
-        <div class="btn-group">
-            <button class="btn-main" onclick="copyScript()">Get Loader</button>
-            <button style="background: transparent; border: 1px solid #333; color: white; padding: 20px 40px; border-radius: 15px; font-weight: 700; cursor: pointer;">Show Showcases</button>
-        </div>
+        <div class="hero-tag">Best "Steal a Brainrot" Script</div>
+        <h1 class="glitch">STEAL EVERY<br><span class="outline-text">BRAINROT.</span></h1>
+        <p style="color: #666; max-width: 600px; margin-bottom: 3rem; letter-spacing: 1px;">The most powerful executor hub for the Brainrot economy. Undetected Skibidi Farm, 0ms Rizz latency, and Infinite Aura spoofing.</p>
+        <button class="main-btn" onclick="copyScript()">COPY LOADSTRING</button>
     </header>
 
-    <section class="info-section">
-        <div class="reveal-left">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Why Nakama for Brainrot?</h2>
-            <p style="color: #888; margin-bottom: 30px;">Steal a Brainrot is about speed and meme-power. Our script provides a direct injection to the game's data stream, allowing you to bypass "Ohio" lag and collect currency at 4x the normal rate.</p>
-            <ul style="list-style: none; color: var(--accent); font-weight: 700;">
-                <li style="margin-bottom: 10px;"><i data-lucide="check-circle" style="vertical-align: middle; margin-right: 10px;"></i> Instant Skibidi Auto-Farm</li>
-                <li style="margin-bottom: 10px;"><i data-lucide="check-circle" style="vertical-align: middle; margin-right: 10px;"></i> Anti-Cringe Detection (Bypass)</li>
-                <li style="margin-bottom: 10px;"><i data-lucide="check-circle" style="vertical-align: middle; margin-right: 10px;"></i> Global Aura Leaderboard Spoof</li>
-            </ul>
+    <section class="showcase">
+        <div class="section-header">
+            <h2 class="glitch" style="font-size: 2rem;">Hub Features</h2>
+            <p style="color: #555;">v4.0.2 - Last Updated: Today</p>
         </div>
-        <div class="code-preview reveal-right">
-            <header>
-                <div style="display: flex; gap: 6px;">
-                    <div style="width:12px; height:12px; border-radius:50%; background:#ff5f56"></div>
-                    <div style="width:12px; height:12px; border-radius:50%; background:#ffbd2e"></div>
-                    <div style="width:12px; height:12px; border-radius:50%; background:#27c93f"></div>
-                </div>
-            </header>
-            <code style="color: #00ff88; font-family: monospace; font-size: 0.8rem; display: block; line-height: 1.6;">
-                <span style="color: #ff79c6;">local</span> Nakama = <span style="color: #f1fa8c;">"Brainrot_Edition"</span><br>
-                <span style="color: #bd93f9;">_G.AutoFarm</span> = <span style="color: #8be9fd;">true</span><br>
-                <span style="color: #bd93f9;">_G.RizzMultiplier</span> = <span style="color: #bd93f9;">999</span><br>
-                <span style="color: #6272a4;">-- Initializing Skibidi Protocol...</span><br>
-                loadstring(game:HttpGet(<span style="color: #f1fa8c;">"raw.git.io/Nakama/StealBrainrot"</span>))()
-            </code>
+
+        <div class="feature-grid">
+            <div class="feature-item reveal">
+                <i data-lucide="zap" style="margin-bottom: 20px; color: var(--accent)"></i>
+                <h3>AUTO BRAINROT</h3>
+                <p>Collects every meme item on the map instantly. Pathfinding optimized for "Ohio" zones to ensure zero death rate.</p>
+            </div>
+            <div class="feature-item reveal">
+                <i data-lucide="shield" style="margin-bottom: 20px; color: var(--accent)"></i>
+                <h3>SIGMA BYPASS</h3>
+                <p>Advanced anti-cheat protection. Our script runs on a separate thread, making it invisible to standard Roblox detection.</p>
+            </div>
+            <div class="feature-item reveal">
+                <i data-lucide="activity" style="margin-bottom: 20px; color: var(--accent)"></i>
+                <h3>INF RIZZ/AURA</h3>
+                <p>Modify your character stats locally and globally. Unlock all premium brainrot cosmetics and emotes with one click.</p>
+            </div>
+        </div>
+
+        <div class="media-box reveal">
+            <div style="position: absolute; color: var(--accent); font-weight: 900; z-index: 1;">[ PREVIEWING HUB_INTERFACE.PNG ]</div>
+            <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=1500&q=80" alt="UI Background">
         </div>
     </section>
-
-    <div class="grid">
-        <div class="card">
-            <i data-lucide="brain"></i>
-            <h3>Brainrot Collector</h3>
-            <p>Automatically vacuums all Brainrot items within a 500 stud radius. No more manual clicking.</p>
-        </div>
-        <div class="card">
-            <i data-lucide="sparkles"></i>
-            <h3>Infinite Aura</h3>
-            <p>Keep your Aura at peak levels. Unlock exclusive visual effects and emotes instantly.</p>
-        </div>
-        <div class="card">
-            <i data-lucide="shield-alert"></i>
-            <h3>Sigma Bypass</h3>
-            <p>Our internal engine mimics a legit player, making you invisible to the "Anti-Cheat" bots.</p>
-        </div>
-    </div>
-
-    <div id="toast">LOADER COPIED. GO MOG! 🗿</div>
 
     <script>
         lucide.createIcons();
 
-        // Scroll Reveal Config
-        ScrollReveal().reveal('.reveal-left', { origin: 'left', distance: '50px', duration: 1000, delay: 200 });
-        ScrollReveal().reveal('.reveal-right', { origin: 'right', distance: '50px', duration: 1000, delay: 400 });
-        ScrollReveal().reveal('.card', { interval: 200, scale: 0.85, duration: 800 });
+        // Scroll Reveal
+        ScrollReveal().reveal('.reveal', { 
+            delay: 300, 
+            distance: '50px', 
+            origin: 'bottom', 
+            duration: 1000,
+            interval: 200 
+        });
 
         function copyScript() {
-            const code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Nakama/Main/main/Brainrot.lua"))()';
-            navigator.clipboard.writeText(code);
-            const t = document.getElementById('toast');
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
+            const script = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Nakama/Main/main/StealABrainrot.lua"))()';
+            navigator.clipboard.writeText(script);
+            
+            const notif = document.getElementById('notif');
+            notif.style.display = 'block';
+            setTimeout(() => { notif.style.display = 'none'; }, 3000);
         }
+
+        // Mouse Parallax Effect for Hero
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            document.querySelector('h1').style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
     </script>
 </body>
 </html>
