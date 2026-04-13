@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nakama Hub | Steal a Brainrot</title>
+    <title>Nakama Hub | Optimized for MM2</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -13,32 +13,34 @@
             --border: rgba(255, 255, 255, 0.08);
         }
 
-        /* Running Animation for Logos */
-        @keyframes scrollLeft {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
+        /* Base Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
+            0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 5px rgba(233, 30, 99, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(233, 30, 99, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(233, 30, 99, 0.2); }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg); color: white; overflow-x: hidden; }
-
-        /* Background Glow */
-        .glow-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, rgba(233, 30, 99, 0.15), transparent);
-            z-index: -1;
+        
+        body { 
+            background-color: var(--bg); 
+            color: white; 
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% -20%, rgba(233, 30, 99, 0.15), transparent);
         }
 
+        /* Navbar */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 10%; background: rgba(13, 13, 18, 0.8);
@@ -46,9 +48,13 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .logo { font-size: 1.6rem; font-weight: 800; }
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
 
-        header { text-align: center; padding: 100px 10% 60px; animation: fadeInUp 0.8s ease-out; }
+        /* Hero */
+        header { 
+            text-align: center; padding: 120px 10% 80px; 
+            animation: fadeInUp 0.8s ease-out;
+        }
         
         .update-banner {
             display: inline-block; background: rgba(255, 255, 255, 0.05);
@@ -63,73 +69,112 @@
         .btn-main {
             background: var(--accent); color: white; padding: 18px 45px;
             border-radius: 12px; font-weight: 700; border: none; cursor: pointer;
-            transition: 0.3s; box-shadow: 0 0 15px rgba(233, 30, 99, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: glowPulse 2s infinite;
         }
 
-        .btn-main:hover { transform: scale(1.05); background: #ff3d7f; }
+        .btn-main:hover { transform: scale(1.05) translateY(-3px); background: #ff3d7f; }
 
-        /* THE EXECUTOR MARQUEE (Left Side) */
-        .executor-ticker {
-            position: fixed; bottom: 30px; left: 0;
-            width: 100%; overflow: hidden;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px 0; border-top: 1px solid var(--border);
-            z-index: 500;
+        /* Stats Grid */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 10% 80px;
         }
 
-        .ticker-wrapper {
-            display: flex; width: 200%;
-            animation: scrollLeft 20s linear infinite;
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 35px; border-radius: 20px; text-align: center;
+            backdrop-filter: blur(5px); transition: 0.3s;
+            animation: fadeInUp 1s ease-out both;
+        }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.4s; }
+
+        .stat-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(255,255,255,0.06); }
+        .stat-card h2 { font-size: 2.2rem; margin-bottom: 5px; }
+        .stat-card p { color: #666; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+
+        /* Feature Section */
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2.5rem; font-weight: 800; }
+
+        .features {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px; padding: 0 10% 100px;
         }
 
-        .exec-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 0 40px; color: #fff; font-weight: 600; font-size: 0.9rem;
-            white-space: nowrap; opacity: 0.6; grayscale: 100%;
+        .feature-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 40px; border-radius: 24px; transition: 0.4s ease;
         }
 
-        .exec-item img { width: 30px; height: 30px; border-radius: 6px; }
+        .feature-card:hover {
+            background: rgba(233, 30, 99, 0.05);
+            border-color: var(--accent);
+            transform: translateY(-10px);
+        }
+
+        .feature-card i { color: var(--accent); margin-bottom: 20px; width: 32px; height: 32px; }
 
         /* Toast Popup */
         #copyToast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             background: #1a1a20; border: 1px solid var(--accent);
             padding: 14px 35px; border-radius: 12px; display: none;
-            z-index: 2000; font-weight: bold;
+            z-index: 2000; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
-    <div class="glow-overlay"></div>
 
     <nav>
         <div class="logo">NAKAMA <span style="color: var(--accent);">HUB</span></div>
         <div class="nav-links">
-            <a href="#" style="background: white; color: black; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none;">Get Discord</a>
+            <a href="#" style="background: white; color: black; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none;">Get Script</a>
         </div>
     </nav>
 
     <header>
-        <div class="update-banner">🚀 Steal a Brainrot Edition — v4.1 Active</div>
-        <h1>Mog the Lobby.<br><span style="color:var(--accent)">Nakama Hub.</span></h1>
-        <p class="hero-desc">The industry standard for Steal a Brainrot. Features high-speed Skibidi collection, sigma bypass, and total aura control.</p>
+        <div class="update-banner">🚀 Version 3.4 Released — Faster than ever</div>
+        <h1>Elevate Gameplay.<br><span style="color:var(--accent)">Nakama Hub.</span></h1>
+        <p class="hero-desc">The industry standard for Murder Mystery 2. Featuring ultra-fast coin autofarm, silent aim, and the cleanest ESP on the market.</p>
         <button class="btn-main" onclick="copyScript()">Copy Loadstring</button>
     </header>
 
-    <div class="executor-ticker">
-        <div class="ticker-wrapper">
-            <div class="exec-item"><span>CODEX</span></div>
-            <div class="exec-item"><span>DELTA</span></div>
-            <div class="exec-item"><span>FLUXUS</span></div>
-            <div class="exec-item"><span>HYDROGEN</span></div>
-            <div class="exec-item"><span>KRNL</span></div>
-            <div class="exec-item"><span>WAVE</span></div>
-            <div class="exec-item"><span>CODEX</span></div>
-            <div class="exec-item"><span>DELTA</span></div>
-            <div class="exec-item"><span>FLUXUS</span></div>
-            <div class="exec-item"><span>HYDROGEN</span></div>
-            <div class="exec-item"><span>KRNL</span></div>
-            <div class="exec-item"><span>WAVE</span></div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>200K+</h2>
+            <p>Happy Users</p>
+        </div>
+        <div class="stat-card">
+            <h2>$ 10M+</h2>
+            <p>Coins Farmed</p>
+        </div>
+        <div class="stat-card">
+            <h2>100%</h2>
+            <p>Undetected</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Built for Performance</h2>
+    <div class="features">
+        <div class="feature-card">
+            <i data-lucide="zap"></i>
+            <h3>Lightning Farm</h3>
+            <p>Optimized paths ensure you collect every coin in the round before anyone else realizes.</p>
+        </div>
+        <div class="feature-card">
+            <i data-lucide="shield-check"></i>
+            <h3>Anti-Ban Shield</h3>
+            <p>Constant updates to bypass the latest Roblox and MM2 detection systems.</p>
+        </div>
+        <div class="feature-card">
+            <i data-lucide="crosshair"></i>
+            <h3>Silent Combat</h3>
+            <p>Hit your shots every time as Sheriff or Murderer without looking suspicious.</p>
         </div>
     </div>
 
@@ -139,44 +184,49 @@
         lucide.createIcons();
 
         async function copyScript() {
-            const loadstring = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Nakama/Main/main/Brainrot.lua"))()';
+            // REPLACE THIS WITH YOUR ACTUAL DISCORD WEBHOOK URL
+            const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE"; 
+            
+            const loadstring = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Nakama/Main/main/Loader.lua"))()';
+            
+            // 1. Copy to Clipboard
             navigator.clipboard.writeText(loadstring);
-
-            // Toast UI
+            
+            // 2. Show Toast Notification
             const toast = document.getElementById('copyToast');
             toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 2500);
-
-            // WEBHOOK LOGIC
-            const WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_HERE';
+            toast.style.animation = 'fadeInUp 0.3s ease-out';
             
-            try {
-                // Get IP data
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-
+            // 3. Send Webhook Notification
+            if (WEBHOOK_URL !== "YOUR_WEBHOOK_URL_HERE") {
                 const payload = {
                     embeds: [{
-                        title: "Script Copied! 🚨",
-                        color: 15277667, // Accent Pink
+                        title: "📂 Loadstring Copied",
+                        description: "A user has copied the Nakama Hub script.",
+                        color: 15277667, // Pink color to match theme
                         fields: [
-                            { name: "IP Address", value: `\`${data.ip}\``, inline: true },
-                            { name: "Platform", value: navigator.platform, inline: true },
-                            { name: "User Agent", value: navigator.userAgent }
+                            { name: "Time", value: new Date().toLocaleString(), inline: true },
+                            { name: "Device", value: navigator.platform, inline: true }
                         ],
-                        footer: { text: "Nakama Hub Logger" },
-                        timestamp: new Date()
+                        footer: { text: "Nakama Hub Analytics" }
                     }]
                 };
 
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-            } catch (err) {
-                console.log("Analytics error");
+                try {
+                    await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (err) {
+                    console.warn("Webhook failed to send.");
+                }
             }
+
+            // Hide toast after 2.5 seconds
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
         }
     </script>
 </body>
