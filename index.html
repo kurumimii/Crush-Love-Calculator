@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nakama Hub | Steal a Brainrot #1</title>
+    <title>Nakama Hub | Steal a Brainrot Edition</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <style>
@@ -12,158 +12,148 @@
         :root {
             --accent: #00ffcc; /* Neon Cyan */
             --bg: #030303;
-            --glass: rgba(255, 255, 255, 0.01);
-            --border: rgba(0, 255, 204, 0.15);
-            --glow: 0 0 15px rgba(0, 255, 204, 0.3);
+            --glass: rgba(255, 255, 255, 0.02);
+            --border: rgba(0, 255, 204, 0.2);
+            --glow: 0 0 20px rgba(0, 255, 204, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; cursor: crosshair; }
         
         body { 
-            background-color: var(--bg); 
-            color: white; 
-            overflow-x: hidden;
-            background-image: 
-                linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-                url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-color: var(--bg); color: white; overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #0a1110 0%, #030303 100%);
         }
 
-        /* Glitch Effect for Titles */
-        .glitch {
-            position: relative;
-            font-family: 'Syncopate', sans-serif;
-            text-transform: uppercase;
-        }
+        /* Glitch & Glow Animations */
+        @keyframes scanline { 0% { bottom: 100%; } 100% { bottom: 0%; } }
+        .scanline { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: rgba(0, 255, 204, 0.1); z-index: 9999; animation: scanline 6s linear infinite; pointer-events: none; }
 
-        @keyframes flicker {
-            0% { opacity: 0.8; } 5% { opacity: 0.9; } 10% { opacity: 0.4; } 15% { opacity: 1; }
-            80% { opacity: 0.9; } 100% { opacity: 1; }
-        }
-
-        /* Navbar Customization */
+        /* Navbar */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1.5rem 8%; background: rgba(0, 0, 0, 0.8);
+            padding: 1.5rem 8%; background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
 
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--accent); text-shadow: var(--glow); }
+        .logo { font-family: 'Syncopate'; font-weight: 900; color: var(--accent); text-shadow: var(--glow); letter-spacing: -2px; }
 
         /* Hero Showcase */
         header { 
-            height: 90vh; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; text-align: center;
-            padding: 0 10%;
+            height: 85vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; padding: 0 10%;
         }
+
+        h1 { font-size: clamp(2.5rem, 10vw, 6rem); font-family: 'Syncopate'; line-height: 0.9; margin-bottom: 2rem; }
+        .accent-text { color: var(--accent); text-shadow: var(--glow); }
+
+        .btn-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
         
-        .hero-tag {
-            color: var(--accent); font-weight: 700; letter-spacing: 5px;
-            text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem;
-            animation: flicker 2s infinite;
-        }
-
-        h1 { font-size: clamp(3rem, 12vw, 7rem); font-weight: 900; line-height: 0.85; margin-bottom: 2rem; }
-        .outline-text { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.3); }
-
         .main-btn {
-            background: transparent; color: var(--accent); border: 2px solid var(--accent);
-            padding: 18px 50px; border-radius: 0px; font-weight: 800; font-family: 'Syncopate';
-            font-size: 0.9rem; transition: 0.5s; box-shadow: var(--glow);
-            position: relative; overflow: hidden;
+            background: var(--accent); color: black; padding: 18px 40px; 
+            font-weight: 800; font-family: 'Syncopate'; font-size: 0.8rem; border: none;
+            transition: 0.4s; box-shadow: var(--glow);
         }
 
-        .main-btn:hover { background: var(--accent); color: black; box-shadow: 0 0 50px var(--accent); transform: scale(1.05); }
+        .main-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px var(--accent); }
 
-        /* Feature Section */
-        .showcase { padding: 100px 10%; }
-        .section-header { margin-bottom: 60px; border-left: 4px solid var(--accent); padding-left: 20px; }
+        /* Executor Downloads */
+        .executors { padding: 100px 10%; background: rgba(255,255,255,0.01); border-top: 1px solid var(--border); }
+        .section-title { font-family: 'Syncopate'; font-size: 1.5rem; margin-bottom: 50px; text-align: center; color: var(--accent); }
 
-        .feature-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;
+        .exec-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;
         }
 
-        .feature-item {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 50px; position: relative; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        .exec-card {
+            background: var(--glass); border: 1px solid var(--border); padding: 30px;
+            text-align: center; transition: 0.4s; border-radius: 4px;
         }
 
-        .feature-item::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 2px;
-            background: var(--accent); transition: 0.4s;
+        .exec-card:hover { border-color: white; background: rgba(255,255,255,0.05); }
+        .exec-card h4 { font-family: 'Syncopate'; margin-bottom: 15px; font-size: 1rem; }
+        .exec-card p { font-size: 0.8rem; color: #777; margin-bottom: 20px; }
+
+        .dl-link {
+            display: inline-block; color: var(--accent); text-decoration: none;
+            font-weight: 700; font-size: 0.8rem; border: 1px solid var(--accent);
+            padding: 8px 20px; transition: 0.3s;
         }
+        .dl-link:hover { background: var(--accent); color: black; }
 
-        .feature-item:hover { background: rgba(0, 255, 204, 0.05); transform: translateY(-10px); }
-        .feature-item:hover::before { width: 100%; }
+        /* Showcase Features */
+        .features { padding: 100px 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .feat-box { padding: 40px; border-left: 2px solid var(--accent); background: linear-gradient(90deg, rgba(0,255,204,0.03), transparent); }
+        .feat-box h3 { font-family: 'Syncopate'; font-size: 1rem; margin-bottom: 10px; color: var(--accent); }
 
-        .feature-item h3 { font-family: 'Syncopate'; font-size: 1.1rem; margin-bottom: 15px; color: var(--accent); }
-        .feature-item p { color: #aaa; font-weight: 300; line-height: 1.6; }
-
-        /* Visual Showcase Image Holder */
-        .media-box {
-            width: 100%; height: 400px; background: #111; margin-top: 40px;
-            border: 1px solid var(--border); position: relative;
-            display: flex; justify-content: center; align-items: center;
-            overflow: hidden;
-        }
-
-        .media-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
-
-        /* Copy Notification */
+        /* Notification */
         #notif {
-            position: fixed; top: 10%; left: 50%; transform: translateX(-50%);
-            background: var(--accent); color: black; padding: 10px 30px;
-            font-weight: 900; font-family: 'Syncopate'; clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+            position: fixed; bottom: 30px; right: 30px; background: white; color: black;
+            padding: 15px 30px; font-weight: 900; font-family: 'Syncopate'; font-size: 0.7rem;
             display: none; z-index: 10000;
         }
     </style>
 </head>
 <body>
 
-    <div id="notif">SCRIPT LOADED // STATUS: ACTIVE</div>
+    <div class="scanline"></div>
+    <div id="notif">DATA_COPIED // RUN IN EXECUTOR</div>
 
     <nav>
-        <div class="logo glitch">NAKAMA_v4</div>
-        <div style="display: flex; gap: 30px;">
-            <a href="#" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.8rem;">DISCORD</a>
-            <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.8rem;">SHOWCASE</a>
+        <div class="logo">NAKAMA_HUB</div>
+        <div class="nav-links">
+            <a href="#downloads" style="color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.8rem; font-family: 'Syncopate';">DOWNLOADS</a>
         </div>
     </nav>
 
     <header>
-        <div class="hero-tag">Best "Steal a Brainrot" Script</div>
-        <h1 class="glitch">STEAL EVERY<br><span class="outline-text">BRAINROT.</span></h1>
-        <p style="color: #666; max-width: 600px; margin-bottom: 3rem; letter-spacing: 1px;">The most powerful executor hub for the Brainrot economy. Undetected Skibidi Farm, 0ms Rizz latency, and Infinite Aura spoofing.</p>
-        <button class="main-btn" onclick="copyScript()">COPY LOADSTRING</button>
+        <div style="font-size: 0.7rem; letter-spacing: 5px; color: #555; margin-bottom: 1rem; font-family: 'Syncopate';">STEAL A BRAINROT : OPTIMIZED</div>
+        <h1>MOG THE<br><span class="accent-text">LOBBY.</span></h1>
+        <p style="color: #888; max-width: 500px; margin-bottom: 3rem;">The #1 Script for Steal a Brainrot. Automated Skibidi collection, Sigma detection bypass, and global Aura multipliers.</p>
+        <div class="btn-group">
+            <button class="main-btn" onclick="copyScript()">COPY LOADSTRING</button>
+            <a href="https://discord.gg/yourlink" class="main-btn" style="background:transparent; border: 2px solid #fff; color: #fff; text-decoration: none; padding-top: 15px;">DISCORD</a>
+        </div>
     </header>
 
-    <section class="showcase">
-        <div class="section-header">
-            <h2 class="glitch" style="font-size: 2rem;">Hub Features</h2>
-            <p style="color: #555;">v4.0.2 - Last Updated: Today</p>
+    <section class="features">
+        <div class="feat-box reveal">
+            <h3>AUTO-BRAINROT</h3>
+            <p>Farms 50,000+ points per minute using advanced pathfinding blurs.</p>
         </div>
-
-        <div class="feature-grid">
-            <div class="feature-item reveal">
-                <i data-lucide="zap" style="margin-bottom: 20px; color: var(--accent)"></i>
-                <h3>AUTO BRAINROT</h3>
-                <p>Collects every meme item on the map instantly. Pathfinding optimized for "Ohio" zones to ensure zero death rate.</p>
-            </div>
-            <div class="feature-item reveal">
-                <i data-lucide="shield" style="margin-bottom: 20px; color: var(--accent)"></i>
-                <h3>SIGMA BYPASS</h3>
-                <p>Advanced anti-cheat protection. Our script runs on a separate thread, making it invisible to standard Roblox detection.</p>
-            </div>
-            <div class="feature-item reveal">
-                <i data-lucide="activity" style="margin-bottom: 20px; color: var(--accent)"></i>
-                <h3>INF RIZZ/AURA</h3>
-                <p>Modify your character stats locally and globally. Unlock all premium brainrot cosmetics and emotes with one click.</p>
-            </div>
+        <div class="feat-box reveal">
+            <h3>RIZZ ENGINE</h3>
+            <p>Automatically interacts with NPCs to maximize your Rizz and Aura stats.</p>
         </div>
+        <div class="feat-box reveal">
+            <h3>GHOST MODE</h3>
+            <p>Bypass all "Ohio" traps and stay invisible to the Sheriff/Moderators.</p>
+        </div>
+    </section>
 
-        <div class="media-box reveal">
-            <div style="position: absolute; color: var(--accent); font-weight: 900; z-index: 1;">[ PREVIEWING HUB_INTERFACE.PNG ]</div>
-            <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=1500&q=80" alt="UI Background">
+    <section class="executors" id="downloads">
+        <h2 class="section-title">CERTIFIED COMPATIBILITY</h2>
+        <div class="exec-grid">
+            <div class="exec-card reveal">
+                <h4>DELTA</h4>
+                <p>Top-tier Android/Windows executor. Fast and stable for Nakama.</p>
+                <a href="https://delta-executor.com/" target="_blank" class="dl-link">DOWNLOAD</a>
+            </div>
+            <div class="exec-card reveal">
+                <h4>CODEX</h4>
+                <p>The gold standard for mobile exploiting. Highly recommended.</p>
+                <a href="https://codex.lol/" target="_blank" class="dl-link">DOWNLOAD</a>
+            </div>
+            <div class="exec-card reveal">
+                <h4>KRNL</h4>
+                <p>Legendary Windows executor with high-end script support.</p>
+                <a href="https://krnl.place/" target="_blank" class="dl-link">DOWNLOAD</a>
+            </div>
+            <div class="exec-card reveal">
+                <h4>HYDROGEN</h4>
+                <p>Clean UI and lightning-fast execution for Android users.</p>
+                <a href="https://hydrogen.sh/" target="_blank" class="dl-link">DOWNLOAD</a>
+            </div>
         </div>
     </section>
 
@@ -172,11 +162,11 @@
 
         // Scroll Reveal
         ScrollReveal().reveal('.reveal', { 
-            delay: 300, 
-            distance: '50px', 
+            delay: 200, 
+            distance: '30px', 
             origin: 'bottom', 
-            duration: 1000,
-            interval: 200 
+            duration: 800,
+            interval: 150 
         });
 
         function copyScript() {
@@ -187,13 +177,6 @@
             notif.style.display = 'block';
             setTimeout(() => { notif.style.display = 'none'; }, 3000);
         }
-
-        // Mouse Parallax Effect for Hero
-        document.addEventListener('mousemove', (e) => {
-            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-            document.querySelector('h1').style.transform = `translate(${moveX}px, ${moveY}px)`;
-        });
     </script>
 </body>
 </html>
