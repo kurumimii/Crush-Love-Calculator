@@ -3,243 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testol Hub | The Ultimate MM2 Script</title>
+    <title>Nakama Hub | Optimized for MM2</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --primary: #00f2ff; /* Cyber Blue */
-            --secondary: #7000ff; /* Purple Accent */
-            --bg: #050505;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #e91e63;
+            --bg: #0d0d12;
+            --card: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        /* Base Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        body {
-            background-color: var(--bg);
-            color: white;
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 5px rgba(233, 30, 99, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(233, 30, 99, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(233, 30, 99, 0.2); }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: white; 
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(0, 242, 255, 0.1) 0%, transparent 40%);
+            background-image: radial-gradient(circle at 50% -20%, rgba(233, 30, 99, 0.15), transparent);
         }
 
         /* Navbar */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 10%;
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 10%; background: rgba(13, 13, 18, 0.8);
+            backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border);
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(90deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
+
+        /* Hero */
+        header { 
+            text-align: center; padding: 120px 10% 80px; 
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .update-banner {
+            display: inline-block; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border); padding: 8px 20px;
+            border-radius: 50px; font-size: 0.85rem; margin-bottom: 2rem;
+            animation: float 4s ease-in-out infinite;
         }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 100px 10% 50px;
+        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-desc { color: #888; max-width: 600px; margin: 0 auto 2.5rem; }
+
+        .btn-main {
+            background: var(--accent); color: white; padding: 18px 45px;
+            border-radius: 12px; font-weight: 700; border: none; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: glowPulse 2s infinite;
         }
 
-        .badge {
-            background: rgba(0, 242, 255, 0.1);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 6px 16px;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 1.5rem;
+        .btn-main:hover { transform: scale(1.05) translateY(-3px); background: #ff3d7f; }
+
+        /* Stats Grid with Delay Animations */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 10% 80px;
         }
 
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 35px; border-radius: 20px; text-align: center;
+            backdrop-filter: blur(5px); transition: 0.3s;
+            animation: fadeInUp 1s ease-out both;
         }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.4s; }
 
-        .hero p {
-            color: #a0a0a0;
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            font-size: 1.1rem;
-        }
+        .stat-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(255,255,255,0.06); }
+        .stat-card h2 { font-size: 2.2rem; margin-bottom: 5px; }
+        .stat-card p { color: #666; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
 
-        /* The Loadstring Box */
-        .loadstring-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            backdrop-filter: blur(12px);
-        }
+        /* Feature Section */
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2.5rem; font-weight: 800; }
 
-        code {
-            flex-grow: 1;
-            text-align: left;
-            padding-left: 15px;
-            color: #888;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .copy-btn {
-            background: var(--primary);
-            color: black;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .copy-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-        }
-
-        /* Features Grid */
         .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 80px 10%;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px; padding: 0 10% 100px;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            padding: 30px;
-            border-radius: 20px;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
+        .feature-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 40px; border-radius: 24px; transition: 0.4s ease;
         }
 
-        .card:hover {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.05);
+        .feature-card:hover {
+            background: rgba(233, 30, 99, 0.05);
+            border-color: var(--accent);
             transform: translateY(-10px);
         }
 
-        .card i {
-            color: var(--primary);
-            margin-bottom: 20px;
+        .feature-card i { color: var(--accent); margin-bottom: 20px; width: 32px; height: 32px; }
+
+        /* Toast Popup */
+        #copyToast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #1a1a20; border: 1px solid var(--accent);
+            padding: 14px 35px; border-radius: 12px; display: none;
+            z-index: 2000; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .card h3 {
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            color: #888;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Simple Toast Notification */
-        #toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary);
-            color: black;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            display: none;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100px); }
-            to { transform: translateY(0); }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">TESTOL HUB</div>
+        <div class="logo">NAKAMA <span style="color: var(--accent);">HUB</span></div>
         <div class="nav-links">
-            <a href="#" style="color: #888; text-decoration: none; font-size: 0.9rem;">Discord</a>
+            <a href="#" style="background: white; color: black; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none;">Get Script</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="badge">Next-Gen MM2 Script</div>
-        <h1>Power Beyond <br><span style="color: var(--primary)">Imagination.</span></h1>
-        <p>Experience the most stable, undetected, and feature-rich script for Murder Mystery 2. Optimized for all major executors.</p>
+    <header>
+        <div class="update-banner">🚀 Version 3.4 Released — Faster than ever</div>
+        <h1>Elevate Gameplay.<br><span style="color:var(--accent)">Nakama Hub.</span></h1>
+        <p class="hero-desc">The industry standard for Murder Mystery 2. Featuring ultra-fast coin autofarm, silent aim, and the cleanest ESP on the market.</p>
+        <button class="btn-main" onclick="copyScript()">Copy Loadstring</button>
+    </header>
 
-        <div class="loadstring-container">
-            <i data-lucide="terminal" style="width:18px; margin-left: 10px; color: #555;"></i>
-            <code id="scriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/Testol/Main/main/Loader.lua"))()</code>
-            <button class="copy-btn" onclick="copyCode()">Copy</button>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>200K+</h2>
+            <p>Happy Users</p>
         </div>
-    </section>
+        <div class="stat-card">
+            <h2>$ 10M+</h2>
+            <p>Coins Farmed</p>
+        </div>
+        <div class="stat-card">
+            <h2>100%</h2>
+            <p>Undetected</p>
+        </div>
+    </div>
 
-    <section class="features">
-        <div class="card">
+    <h2 class="section-title">Built for Performance</h2>
+    <div class="features">
+        <div class="feature-card">
             <i data-lucide="zap"></i>
-            <h3>Instant Auto-Farm</h3>
-            <p>The fastest coin collection system on the market. Max out your bag in seconds without being caught.</p>
+            <h3>Lightning Farm</h3>
+            <p>Optimized paths ensure you collect every coin in the round before anyone else realizes.</p>
         </div>
-        <div class="card">
+        <div class="feature-card">
             <i data-lucide="shield-check"></i>
-            <h3>Undetected</h3>
-            <p>Our bypass technology ensures you stay safe from bans while enjoying premium features.</p>
+            <h3>Anti-Ban Shield</h3>
+            <p>Constant updates to bypass the latest Roblox and MM2 detection systems.</p>
         </div>
-        <div class="card">
-            <i data-lucide="eye"></i>
-            <h3>Full ESP</h3>
-            <p>Track the Murderer and Sheriff across the map with high-performance ESP and box outlines.</p>
+        <div class="feature-card">
+            <i data-lucide="crosshair"></i>
+            <h3>Silent Combat</h3>
+            <p>Hit your shots every time as Sheriff or Murderer without looking suspicious.</p>
         </div>
-    </section>
+    </div>
 
-    <div id="toast">Copied to clipboard! 🚀</div>
+    <div id="copyToast">Successfully Copied! 🚀</div>
 
     <script>
-        // Initialize Icons
         lucide.createIcons();
 
-        // Copy Function
-        function copyCode() {
-            const code = document.getElementById('scriptText').innerText;
-            navigator.clipboard.writeText(code);
+        function copyScript() {
+            const loadstring = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Nakama/Main/main/Loader.lua"))()';
+            navigator.clipboard.writeText(loadstring);
             
-            const toast = document.getElementById('toast');
+            const toast = document.getElementById('copyToast');
             toast.style.display = 'block';
+            toast.style.animation = 'fadeInUp 0.3s ease-out';
             
             setTimeout(() => {
                 toast.style.display = 'none';
-            }, 3000);
+            }, 2500);
         }
     </script>
 </body>
